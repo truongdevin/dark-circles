@@ -4,7 +4,7 @@ var Bullet = require("./bullet.js");
 
 var WhiteBloodCell = function (hash) {
   hash.color = hash.color || "red"; // red , crimson, aqua
-  hash.radius = hash.radius || 15;
+  hash.radius = hash.radius || 5;
   hash.vel = [0,0];
   MovingObject.call(this, hash);
 };

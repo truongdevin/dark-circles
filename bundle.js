@@ -75,14 +75,15 @@
 	}
 	
 	Game.BG_COLOR="black";
-	Game.DIM_X = 1000;
-	Game.DIM_Y = 600;
-	Game.NUM_INTRUDERS = 16;
+	// Game.DIM_X = 1000;
+	// Game.DIM_Y = 600;
+	Game.DIM_X = window.innerWidth;
+	Game.DIM_Y = window.innerHeight;
+	Game.NUM_INTRUDERS = 36;
 	
 	Game.prototype.addIntruders = function() {
 	  for (var i = 0; i < Game.NUM_INTRUDERS; i++) {
-	    var a = new Intruder({pos: this.randomPosition(), game: this});
-	    this.intruders.push(a);
+	    this.intruders.push(new Intruder({pos: this.randomPosition(), game: this}));
 	  }
 	};
 	
@@ -352,8 +353,8 @@
 	
 	var Intruder = function (hash) {
 	  hash.color = hash.color || "white"; // red , crimson, aqua
-	  hash.radius = hash.radius || 10;
-	  hash.vel = hash.vel || Util.randomVec(0.5);
+	  hash.radius = hash.radius || Math.floor(Math.random()*10+2);
+	  hash.vel = hash.vel || Util.randomVec(0.2);
 	  MovingObject.call(this, hash);
 	}
 	Util.inherits(Intruder, MovingObject);
@@ -372,7 +373,7 @@
 	
 	var WhiteBloodCell = function (hash) {
 	  hash.color = hash.color || "red"; // red , crimson, aqua
-	  hash.radius = hash.radius || 15;
+	  hash.radius = hash.radius || 5;
 	  hash.vel = [0,0];
 	  MovingObject.call(this, hash);
 	};
@@ -421,7 +422,7 @@
 	
 	var WhiteBloodCell = function (hash) {
 	  hash.color = hash.color || "red"; // red , crimson, aqua
-	  hash.radius = hash.radius || 15;
+	  hash.radius = hash.radius || 5;
 	  hash.vel = [0,0];
 	  MovingObject.call(this, hash);
 	};

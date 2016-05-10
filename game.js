@@ -12,14 +12,15 @@ var Game = function () {
 }
 
 Game.BG_COLOR="black";
-Game.DIM_X = 1000;
-Game.DIM_Y = 600;
-Game.NUM_INTRUDERS = 16;
+// Game.DIM_X = 1000;
+// Game.DIM_Y = 600;
+Game.DIM_X = window.innerWidth;
+Game.DIM_Y = window.innerHeight;
+Game.NUM_INTRUDERS = 36;
 
 Game.prototype.addIntruders = function() {
   for (var i = 0; i < Game.NUM_INTRUDERS; i++) {
-    var a = new Intruder({pos: this.randomPosition(), game: this});
-    this.intruders.push(a);
+    this.intruders.push(new Intruder({pos: this.randomPosition(), game: this}));
   }
 };
 
