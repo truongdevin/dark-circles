@@ -4,32 +4,34 @@ var Bullet = require("./bullet");
 
 var Game = function () {
   this.intruders = [];
-  this.ships = [];
+  this.whiteBloodCells = [];
   this.bullets = [];
 
-  // this.addWhiteBloodCell();
   this.addIntruders();
 }
 
 Game.BG_COLOR="black";
-// Game.DIM_X = 1000;
-// Game.DIM_Y = 600;
 Game.DIM_X = window.innerWidth;
 Game.DIM_Y = window.innerHeight;
-Game.NUM_INTRUDERS = 36;
+Game.NUM_INTRUDERS = 100;
 
 Game.prototype.addIntruders = function() {
   for (var i = 0; i < Game.NUM_INTRUDERS; i++) {
-    this.intruders.push(new Intruder({pos: this.randomPosition(), game: this}));
+    this.intruders.push(new Intruder({
+      pos: this.randomPosition(),
+      game: this,
+      color: "white"
+    }));
   }
 };
 
 Game.prototype.addWhiteBloodCell = function() {
   var ship = new WhiteBloodCell({
     pos: this.randomPosition(),
-    game: this
+    game: this,
+    color: "red"
   });
-  this.ships.push(ship);
+  this.whiteBloodCells.push(ship);
   return ship;
 };
 
@@ -38,7 +40,10 @@ Game.prototype.addBullet = function (bullet) {
 }
 
 Game.prototype.allObjects = function () {
-  return this.intruders.concat(this.ships, this.bullets);
+
+  //determines priority of the resize
+  return this.intruders.concat(this.whiteBloodCells, this.bullets);
+  // return this.whiteBloodCells.concat(this.intruders, this.bullets);
 };
 
 Game.prototype.draw = function (ctx) {
@@ -100,7 +105,7 @@ Game.prototype.remove = function (object) {
     var idx = this.intruders.indexOf(object);
     this.intruders.splice(idx,1);
  } else if (object instanceof WhiteBloodCell) {
-   this.ships.splice(this.ships.indexOf(object), 1);
+   this.whiteBloodCells.splice(this.whiteBloodCells.indexOf(object), 1);
  }
 };
 

@@ -22,10 +22,10 @@ GameView.prototype.start = function (canvasEl) {
 
 GameView.prototype.bindKeyHandlers = function () {
   var whiteBloodCell = this.whiteBloodCell;
-  key('w', function() {Math.abs(whiteBloodCell.vel[1]) < 10 ? whiteBloodCell.power([0,-1]) : ""});
-  key('a', function() {Math.abs(whiteBloodCell.vel[0]) < 10 ? whiteBloodCell.power([-1,0]) : ""});
-  key('s', function() {Math.abs(whiteBloodCell.vel[1]) < 10 ? whiteBloodCell.power([0,1]) : ""});
-  key('d', function() {Math.abs(whiteBloodCell.vel[0]) < 10 ? whiteBloodCell.power([1,0]) : ""});
+  key('w', function() {Math.abs(whiteBloodCell.vel[1]) < 1 ? whiteBloodCell.power([0,-0.25]) : ""});
+  key('a', function() {Math.abs(whiteBloodCell.vel[0]) < 1 ? whiteBloodCell.power([-0.25,0]) : ""});
+  key('s', function() {Math.abs(whiteBloodCell.vel[1]) < 1 ? whiteBloodCell.power([0,0.25]) : ""});
+  key('d', function() {Math.abs(whiteBloodCell.vel[0]) < 1 ? whiteBloodCell.power([0.25,0]) : ""});
 
   key('space', function() {whiteBloodCell.fireBullet()});
 };
