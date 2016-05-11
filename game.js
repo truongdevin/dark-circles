@@ -129,6 +129,8 @@ Game.prototype.remove = function (object) {
     this.intruders.splice(idx,1);
  } else if (object instanceof WhiteBloodCell) {
    this.whiteBloodCells.splice(this.whiteBloodCells.indexOf(object), 1);
+ } else if (object instanceof EliteIntruder) {
+   this.eliteIntruders.splice(this.eliteIntruders.indexOf(object), 1);
  }
 };
 
