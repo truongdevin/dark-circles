@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Game = __webpack_require__(1);
-	var GameView = __webpack_require__(7);
+	var GameView = __webpack_require__(8);
 	var MovingObject = __webpack_require__(3);
 	
 	var canvasEl = document.getElementById("game-canvas");
@@ -61,10 +61,10 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Intruder = __webpack_require__(8);
-	var EliteIntruder = __webpack_require__(11);
-	var WhiteBloodCell = __webpack_require__(9);
-	var Bullet = __webpack_require__(6);
+	var Intruder = __webpack_require__(2);
+	var EliteIntruder = __webpack_require__(5);
+	var WhiteBloodCell = __webpack_require__(6);
+	var Bullet = __webpack_require__(7);
 	
 	var Game = function () {
 	  this.intruders = [];
@@ -199,7 +199,25 @@
 
 
 /***/ },
-/* 2 */,
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var MovingObject = __webpack_require__(3);
+	var Util = __webpack_require__(4);
+	
+	var Intruder = function (hash) {
+	  hash.color = hash.color || "black"; // red , crimson, aqua
+	  hash.radius = hash.radius || Math.floor(Math.random()*15+2);
+	  hash.vel = hash.vel || Util.randomVec(0.3);
+	  MovingObject.call(this, hash);
+	}
+	Util.inherits(Intruder, MovingObject);
+	Intruder.prototype.type = "Intruder";
+	
+	module.exports = Intruder;
+
+
+/***/ },
 /* 3 */
 /***/ function(module, exports) {
 
@@ -234,9 +252,7 @@
 	};
 	
 	MovingObject.prototype.collideWith = function (otherObject) {
-	  // these two if statements ensure the bullet and cell do not interact with each other
-	  if (this.type === "WhiteBloodCell" && otherObject.type === "Bullet") return;
-	  if (this.type === "Bullet" && otherObject.type === "WhiteBloodCell") return;
+	
 	  if (otherObject.type === "EliteIntruder") return;
 	
 	  if (this.radius < otherObject.radius){
@@ -244,7 +260,8 @@
 	      this.game.remove(this);
 	    }
 	    otherObject.radius += this.radius/otherObject.radius;
-	    this.radius -= 0.5;
+	    // this.radius -= 0.5;
+	    this.radius*=0.90;
 	    // this.radius -= this.radius/otherObject.radius;
 	  }
 	};
@@ -300,17 +317,103 @@
 
 
 /***/ },
-/* 5 */,
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var MovingObject = __webpack_require__(3);
+	var Util = __webpack_require__(4);
+	
+	var EliteIntruder = function (hash) {
+	  hash.color = hash.color || "red"; // red , crimson, aqua
+	  hash.radius = hash.radius || Math.floor(Math.random()*15+2);
+	  hash.vel = hash.vel || Util.randomVec(0.2);
+	  MovingObject.call(this, hash);
+	}
+	Util.inherits(EliteIntruder, MovingObject);
+	EliteIntruder.prototype.type = "EliteIntruder";
+	
+	EliteIntruder.prototype.collideWith = function (otherObject) {
+	  // if (otherObject.type === "Intruder") {
+	  //   // object.remove();
+	  //   otherObject.radius+=5;
+	  //   this.remove();
+	  // }
+	};
+	
+	module.exports = EliteIntruder;
+
+
+/***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var MovingObject = __webpack_require__(3);
 	var Util = __webpack_require__(4);
-	var WhiteBloodCell = __webpack_require__(9);
+	var Bullet = __webpack_require__(7);
+	
+	var WhiteBloodCell = function (hash) {
+	  hash.color = hash.color || "red"; // red , crimson, aqua
+	  hash.radius = hash.radius || 5;
+	  hash.vel = [0,0];
+	  MovingObject.call(this, hash);
+	};
+	
+	Util.inherits(WhiteBloodCell, MovingObject);
+	
+	WhiteBloodCell.prototype.type = "WhiteBloodCell";
+	
+	WhiteBloodCell.prototype.power = function (impulse) {
+	  this.vel[0] += impulse[0];
+	  this.vel[1] += impulse[1];
+	};
+	
+	WhiteBloodCell.prototype.move = function() {
+	  this.vel[0]*=0.99;
+	  this.vel[1]*=0.99;
+	  this.pos[0] += this.vel[0];
+	  this.pos[1] += this.vel[1];
+	  // this.game.wrap(this.pos);
+	};
+	
+	WhiteBloodCell.prototype.fireBullet = function () {
+	  // can only shoot if self is large enough
+	  if (this.radius > 5) {
+	    var bulletVel = Util.scale(
+	      Util.dir(this.vel),
+	      3
+	    );
+	
+	    var offset = Util.scale(
+	      Util.dir(this.vel),
+	      this.radius + 2
+	    );
+	
+	    var bullet = new Bullet({
+	      pos: [this.pos[0] + offset[0] ,this.pos[1] + offset[1]],
+	      vel: bulletVel,
+	      game: this.game,
+	      color: this.color
+	    });
+	    this.game.addBullet(bullet);
+	    this.radius -= 1;
+	  }
+	};
+	
+	
+	module.exports = WhiteBloodCell;
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var MovingObject = __webpack_require__(3);
+	var Util = __webpack_require__(4);
+	var WhiteBloodCell = __webpack_require__(6);
 	
 	var Bullet = function (hash) {
 	  hash.color = hash.color || "red"; // red , crimson, aqua
-	  hash.radius = 5;
+	  hash.radius = 4;
 	  MovingObject.call(this, hash);
 	};
 	
@@ -336,7 +439,7 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Game = __webpack_require__(1);
@@ -371,106 +474,6 @@
 	
 	
 	module.exports = GameView;
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var MovingObject = __webpack_require__(3);
-	var Util = __webpack_require__(4);
-	
-	var Intruder = function (hash) {
-	  hash.color = hash.color || "black"; // red , crimson, aqua
-	  hash.radius = hash.radius || Math.floor(Math.random()*15+2);
-	  hash.vel = hash.vel || Util.randomVec(0.2);
-	  MovingObject.call(this, hash);
-	}
-	Util.inherits(Intruder, MovingObject);
-	Intruder.prototype.type = "Intruder";
-	
-	module.exports = Intruder;
-
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var MovingObject = __webpack_require__(3);
-	var Util = __webpack_require__(4);
-	var Bullet = __webpack_require__(6);
-	
-	var WhiteBloodCell = function (hash) {
-	  hash.color = hash.color || "red"; // red , crimson, aqua
-	  hash.radius = hash.radius || 5;
-	  hash.vel = [0,0];
-	  MovingObject.call(this, hash);
-	};
-	
-	Util.inherits(WhiteBloodCell, MovingObject);
-	
-	WhiteBloodCell.prototype.type = "WhiteBloodCell";
-	
-	WhiteBloodCell.prototype.power = function (impulse) {
-	  this.vel[0] += impulse[0];
-	  this.vel[1] += impulse[1];
-	};
-	
-	WhiteBloodCell.prototype.move = function() {
-	  this.vel[0]*=0.99;
-	  this.vel[1]*=0.99;
-	  this.pos[0] += this.vel[0];
-	  this.pos[1] += this.vel[1];
-	  // this.game.wrap(this.pos);
-	};
-	
-	WhiteBloodCell.prototype.fireBullet = function () {
-	  // can only shoot if self is large enough
-	  if (this.radius > 5) {
-	    var bulletVel = Util.scale(
-	      Util.dir(this.vel),
-	      3
-	    );
-	    var bullet = new Bullet({
-	      pos: this.pos.slice(),
-	      vel: bulletVel,
-	      game: this.game
-	    });
-	    this.game.addBullet(bullet);
-	    this.radius -= 1;
-	  }
-	};
-	
-	
-	module.exports = WhiteBloodCell;
-
-
-/***/ },
-/* 10 */,
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var MovingObject = __webpack_require__(3);
-	var Util = __webpack_require__(4);
-	
-	var EliteIntruder = function (hash) {
-	  hash.color = hash.color || "red"; // red , crimson, aqua
-	  hash.radius = hash.radius || Math.floor(Math.random()*15+2);
-	  hash.vel = hash.vel || Util.randomVec(0.2);
-	  MovingObject.call(this, hash);
-	}
-	Util.inherits(EliteIntruder, MovingObject);
-	EliteIntruder.prototype.type = "EliteIntruder";
-	
-	EliteIntruder.prototype.collideWith = function (otherObject) {
-	  // if (otherObject.type === "Intruder") {
-	  //   // object.remove();
-	  //   otherObject.radius+=5;
-	  //   this.remove();
-	  // }
-	};
-	
-	module.exports = EliteIntruder;
 
 
 /***/ }

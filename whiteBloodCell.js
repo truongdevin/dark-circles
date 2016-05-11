@@ -33,10 +33,17 @@ WhiteBloodCell.prototype.fireBullet = function () {
       Util.dir(this.vel),
       3
     );
+
+    var offset = Util.scale(
+      Util.dir(this.vel),
+      this.radius + 2
+    );
+
     var bullet = new Bullet({
-      pos: this.pos.slice(),
+      pos: [this.pos[0] + offset[0] ,this.pos[1] + offset[1]],
       vel: bulletVel,
-      game: this.game
+      game: this.game,
+      color: this.color
     });
     this.game.addBullet(bullet);
     this.radius -= 1;
