@@ -110,7 +110,7 @@ Game.prototype.checkCollosions = function () {
 
       if (object1.isCollidedWith(object2)) {
         object1.collideWith(object2);
-        console.log("COLLIDED");
+        // console.log("COLLIDED");
       }
     });
   });
