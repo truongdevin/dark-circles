@@ -116,9 +116,21 @@ Game.prototype.checkCollosions = function () {
   });
 };
 
+Game.prototype.checkGameState = function () {
+  var canvas = document.getElementById("game-canvas");
+  var box = document.getElementById('box');
+
+  if (this.whiteBloodCells.length === 0) {
+    box.className="";
+    canvas.className="opaque-on";
+  }
+
+}
+
 Game.prototype.step = function () {
   this.moveObjects();
   this.checkCollosions();
+  this.checkGameState();
 };
 
 Game.prototype.remove = function (object) {

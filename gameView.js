@@ -49,6 +49,11 @@ GameView.prototype.bindKeyHandlers = function () {
 };
 
 GameView.prototype.reset = function (game, ctx) {
+  var canvas = document.getElementById("game-canvas");
+  var box = document.getElementById('box');
+
+  box.className="hidden";
+  canvas.className="opaque-off";
   this.ctx = ctx;
   this.game = game;
   clearInterval(this.interval);
