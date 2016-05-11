@@ -1,19 +1,23 @@
 var Intruder = require("./intruder.js");
+var EliteIntruder = require("./eliteIntruder.js");
 var WhiteBloodCell = require("./whiteBloodCell");
 var Bullet = require("./bullet");
 
 var Game = function () {
   this.intruders = [];
+  this.eliteIntruders = [];
   this.whiteBloodCells = [];
   this.bullets = [];
 
   this.addIntruders();
+  this.addEliteIntruders();
 }
 
 Game.BG_COLOR="black";
 Game.DIM_X = window.innerWidth;
 Game.DIM_Y = window.innerHeight;
 Game.NUM_INTRUDERS = 100;
+Game.NUM_ELITES = 20;
 
 Game.prototype.addIntruders = function() {
   for (var i = 0; i < Game.NUM_INTRUDERS; i++) {
@@ -25,11 +29,21 @@ Game.prototype.addIntruders = function() {
   }
 };
 
+Game.prototype.addEliteIntruders = function() {
+  for (var i = 0; i < Game.NUM_ELITES; i++) {
+    this.eliteIntruders.push(new EliteIntruder({
+      pos: this.randomPosition(),
+      game: this,
+      color: "red"
+    }));
+  }
+};
+
 Game.prototype.addWhiteBloodCell = function() {
   var ship = new WhiteBloodCell({
     pos: this.randomPosition(),
     game: this,
-    color: "red"
+    color: "orange"
   });
   this.whiteBloodCells.push(ship);
   return ship;
@@ -40,18 +54,25 @@ Game.prototype.addBullet = function (bullet) {
 }
 
 Game.prototype.allObjects = function () {
-
-  //determines priority of the resize
-  return this.intruders.concat(this.whiteBloodCells, this.bullets);
-  // return this.whiteBloodCells.concat(this.intruders, this.bullets);
+  return this.intruders.concat(this.whiteBloodCells, this.bullets, this.eliteIntruders);
 };
 
 Game.prototype.draw = function (ctx) {
+  // Game.DIM_X = window.innerWidth;
+  // Game.DIM_Y = window.innerHeight;
   ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
   ctx.fillStyle = Game.BG_COLOR;
   ctx.fillRect(0,0,Game.DIM_X, Game.DIM_Y);
 
   this.allObjects().forEach(function(object) {
+
+    if(object.pos[0] + object.vel[0] > Game.DIM_X-object.radius || object.pos[0] + object.vel[0] < object.radius) {
+        object.vel[0] *= -1;
+    }
+    if(object.pos[1] + object.vel[1] > Game.DIM_Y-object.radius || object.pos[1] + object.vel[1] < object.radius) {
+      object.vel[1] *= -1;
+    }
+
     object.draw(ctx);
   });
 };
@@ -69,6 +90,8 @@ Game.prototype.randomPosition = function() {
   return [x, y];
 };
 
+
+// no longer used, but allows you to wrap the objects in the canvas
 Game.prototype.wrap = function (pos) {
   pos[0] = pos[0] > 0 ? pos[0] % Game.DIM_X : Game.DIM_X
   pos[1] = pos[1] > 0 ? pos[1] % Game.DIM_Y : Game.DIM_Y

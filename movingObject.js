@@ -18,7 +18,7 @@ MovingObject.prototype.draw = function(ctx) {
 MovingObject.prototype.move = function() {
   this.pos[0] += this.vel[0];
   this.pos[1] += this.vel[1];
-  this.game.wrap(this.pos);
+  // this.game.wrap(this.pos);
 };
 
 MovingObject.prototype.isCollidedWith = function (otherObject) {
@@ -32,6 +32,7 @@ MovingObject.prototype.collideWith = function (otherObject) {
   // these two if statements ensure the bullet and cell do not interact with each other
   if (this.type === "WhiteBloodCell" && otherObject.type === "Bullet") return;
   if (this.type === "Bullet" && otherObject.type === "WhiteBloodCell") return;
+  if (otherObject.type === "EliteIntruder") return;
 
   if (this.radius < otherObject.radius){
     if (this.radius < 2) {

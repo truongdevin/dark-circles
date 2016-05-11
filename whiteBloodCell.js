@@ -23,7 +23,7 @@ WhiteBloodCell.prototype.move = function() {
   this.vel[1]*=0.99;
   this.pos[0] += this.vel[0];
   this.pos[1] += this.vel[1];
-  this.game.wrap(this.pos);
+  // this.game.wrap(this.pos);
 };
 
 WhiteBloodCell.prototype.fireBullet = function () {
@@ -39,7 +39,7 @@ WhiteBloodCell.prototype.fireBullet = function () {
       game: this.game
     });
     this.game.addBullet(bullet);
-    this.radius -= 0.5;
+    this.radius -= 1;
   }
 };
 

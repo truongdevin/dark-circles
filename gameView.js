@@ -11,8 +11,6 @@ GameView.prototype.start = function (canvasEl) {
     this.bindKeyHandlers();
     var self = this;
     var refresh = function() {
-      // self.game.moveObjects();
-      // self.game.checkCollosions();
       self.game.step();
       self.game.draw(self.ctx);
     };
