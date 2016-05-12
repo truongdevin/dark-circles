@@ -55,18 +55,28 @@
 	var ctx = canvasEl.getContext("2d");
 	var game = new Game();
 	var gameView = new GameView(game, ctx)
-	gameView.start();
+	// gameView.start();
 	
+	var gameStart = false;
 	
 	var el = document.getElementsByTagName('body')[0];
+	var menu = document.getElementById('menu')
 	
 	el.addEventListener("keydown", function() {
-	  // reset on keypress of 'r' or 'R'
-	  if (event.keyCode === 82) {
+	  if (!gameStart) {
+	    gameStart = true;
+	    var canvasEl = document.getElementById("game-canvas");
+	    var menu = document.getElementById('menu')
+	    menu.className = "hidden";
+	    canvasEl.className = "opaque-off"
+	
+	
+	    gameView.start();
+	  } else if (event.keyCode === 82) {
 	    gameView.reset(new Game(), ctx);
 	  }
 	
-	})
+	});
 
 
 /***/ },

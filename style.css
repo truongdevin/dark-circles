@@ -12,11 +12,24 @@ canvas {
   z-index: 1;
 }
 
+#menu {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 84px;
+  font-style: bold;
+  color: black;
+  margin: 0 auto;
+  z-index: 2;
+}
+
 .game-over {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   text-align: center;
   font-size: 36px;
   font-style: bold;
@@ -25,6 +38,7 @@ canvas {
   z-index: 2;
 }
 
+
 .hidden {
   display: none;
 }
@@ -32,14 +46,21 @@ canvas {
 .opaque-on {
   /*opacity: 0.25;*/
   opacity: 0.25;
-  transition: opacity 2s ease-in-out;
-  -moz-transition: opacity 2s ease-in-out;
-  -webkit-transition: opacity 2s ease-in-out;
+  transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity 1s ease-in-out;
+}
+
+.opaque-on-full {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity 1s ease-in-out;
 }
 
 .opaque-off {
   opacity: 1;
-  transition: opacity .50s ease-in-out;
-  -moz-transition: opacity .50s ease-in-out;
-  -webkit-transition: opacity .50s ease-in-out;
+  transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity 1s ease-in-out;
 }
