@@ -62,7 +62,7 @@
 	var mainMenu = false;
 	var instructionPage = false;
 	
-	el.addEventListener("keydown", function() {
+	el.addEventListener("keydown", function(event) {
 	  var menu = document.getElementById('menu')
 	  var instructions = document.getElementById('instructions');
 	
@@ -256,7 +256,7 @@
 	var Intruder = function (hash) {
 	  hash.color = hash.color || "black"; // red , crimson, aqua
 	  hash.radius = hash.radius || Math.floor(Math.random()*15+2);
-	  hash.vel = hash.vel || Util.randomVec(0.3);
+	  hash.vel = hash.vel || Util.randomVec(0.2);
 	  MovingObject.call(this, hash);
 	}
 	Util.inherits(Intruder, MovingObject);
@@ -308,9 +308,7 @@
 	      this.game.remove(this);
 	    }
 	    otherObject.radius += this.radius/otherObject.radius;
-	    // this.radius -= 0.5;
 	    this.radius*=0.90;
-	    // this.radius -= this.radius/otherObject.radius;
 	  }
 	};
 	
@@ -455,7 +453,7 @@
 	      pos: [this.pos[0] + offset[0] ,this.pos[1] + offset[1]],
 	      vel: bulletVel,
 	      game: this.game,
-	      color: this.color
+	      color: 'white'
 	    });
 	    this.game.addBullet(bullet);
 	    this.radius -= 1;
@@ -488,15 +486,6 @@
 	  this.pos[0] += this.vel[0];
 	  this.pos[1] += this.vel[1];
 	};
-	
-	// Bullet.prototype.collideWith = function (otherObject) {
-	//   // if (otherObject.type === "Intruder") {
-	//   //   // object.remove();
-	//   //   otherObject.radius+=5;
-	//   //   this.remove();
-	//   // }
-	// };
-	
 	
 	module.exports = Bullet;
 

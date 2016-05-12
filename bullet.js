@@ -17,13 +17,4 @@ Bullet.prototype.move = function() {
   this.pos[1] += this.vel[1];
 };
 
-// Bullet.prototype.collideWith = function (otherObject) {
-//   // if (otherObject.type === "Intruder") {
-//   //   // object.remove();
-//   //   otherObject.radius+=5;
-//   //   this.remove();
-//   // }
-// };
-
-
 module.exports = Bullet;

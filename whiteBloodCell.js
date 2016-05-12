@@ -43,7 +43,7 @@ WhiteBloodCell.prototype.fireBullet = function () {
       pos: [this.pos[0] + offset[0] ,this.pos[1] + offset[1]],
       vel: bulletVel,
       game: this.game,
-      color: this.color
+      color: 'white'
     });
     this.game.addBullet(bullet);
     this.radius -= 1;

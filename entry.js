@@ -16,7 +16,7 @@ var el = document.getElementsByTagName('body')[0];
 var mainMenu = false;
 var instructionPage = false;
 
-el.addEventListener("keydown", function() {
+el.addEventListener("keydown", function(event) {
   var menu = document.getElementById('menu')
   var instructions = document.getElementById('instructions');
 

@@ -29,6 +29,7 @@ if (this.radius < otherObject.radius){
 ```
 
 ### Future Directions for the Project
+- Buffer when spawning so you don't die immediately if you're unlucky
 - Visual feedback for the direction the circle is facing
 - More enemy variety
 - Final boss?
