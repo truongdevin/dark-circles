@@ -11,18 +11,37 @@
     <script src="keymaster.js"></script>
     <script src="bundle.js"></script>
 
-    <div id="menu">
+    <div id="menu" class="opaque-off">
       DARK CIRCLES
+      <div>Press any key to continue</div>
     </div>
 
-    <div id="box" class="hidden">
-      <div class="game-over">
-        <div class="">
-          You Died
-        </div>
-        <div>
-          Press R to try again.
-        </div>
+    <div id="instructions" class="opaque-on-full">
+      <h2>INSTRUCTIONS</h2>
+      <div>
+        You are the Chosen Circle.
+        Go forth and consume the Fallen Circles (white).
+        Use their souls to destroy the Dark Circles (red).
+      </div>
+      </br>
+      <div>- Move with W-A-S-D</div>
+      <div>- Touch smaller WHITE circles to consume them </div>
+      <div>- Shoot (SPACE) your accumulated matter at RED circles to destroy them </div>
+      <div>- Go forth and become the only circle </div>
+    </div>
+
+
+    <div id="game-over" class="opaque-on-full">
+      You Died
+      <div>
+        Press R to try again.
+      </div>
+    </div>
+
+    <div id="game-won" class="opaque-on-full">
+      You are indeed the Chosen Circle.
+      <div>
+        Press R to play again.
       </div>
     </div>
 

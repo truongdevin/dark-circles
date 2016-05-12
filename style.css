@@ -6,6 +6,10 @@ html, body {
   position: relative;
 }
 
+*:hover {
+  cursor: default;
+}
+
 canvas {
   display: block;
   position: absolute;
@@ -25,10 +29,15 @@ canvas {
   z-index: 2;
 }
 
-.game-over {
+#menu div {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+#instructions {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 40%;
   transform: translate(-50%, -50%);
   text-align: center;
   font-size: 36px;
@@ -38,13 +47,43 @@ canvas {
   z-index: 2;
 }
 
-
-.hidden {
-  display: none;
+#game-over {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 60px;
+  font-style: bold;
+  color: black;
+  margin: 0 auto;
+  z-index: 2;
 }
 
-.opaque-on {
-  /*opacity: 0.25;*/
+#game-over div {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+#game-won {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 60px;
+  font-style: bold;
+  color: black;
+  margin: 0 auto;
+  z-index: 2;
+}
+
+#game-won div {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+.opaque-on-half {
   opacity: 0.25;
   transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;

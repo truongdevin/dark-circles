@@ -57,21 +57,27 @@
 	var gameView = new GameView(game, ctx)
 	// gameView.start();
 	
-	var gameStart = false;
-	
 	var el = document.getElementsByTagName('body')[0];
-	var menu = document.getElementById('menu')
+	
+	var mainMenu = false;
+	var instructionPage = false;
 	
 	el.addEventListener("keydown", function() {
-	  if (!gameStart) {
-	    gameStart = true;
+	  var menu = document.getElementById('menu')
+	  var instructions = document.getElementById('instructions');
+	
+	  if (!mainMenu) {
+	    mainMenu = true;
+	    menu.className = "opaque-on-full";
+	    instructions.className = "opaque-off";
+	
+	  } else if (!instructionPage) {
+	    instructionPage = true;
+	    instructions.className = "opaque-on-full";
 	    var canvasEl = document.getElementById("game-canvas");
-	    var menu = document.getElementById('menu')
-	    menu.className = "hidden";
 	    canvasEl.className = "opaque-off"
-	
-	
 	    gameView.start();
+	
 	  } else if (event.keyCode === 82) {
 	    gameView.reset(new Game(), ctx);
 	  }
@@ -126,7 +132,7 @@
 	
 	Game.prototype.addWhiteBloodCell = function() {
 	  var ship = new WhiteBloodCell({
-	    pos: this.randomPosition(),
+	    pos: [Game.DIM_X/2, Game.DIM_Y/2],
 	    game: this,
 	    color: "orange"
 	  });
@@ -203,11 +209,17 @@
 	
 	Game.prototype.checkGameState = function () {
 	  var canvas = document.getElementById("game-canvas");
-	  var box = document.getElementById('box');
+	  var gameOver = document.getElementById('game-over');
+	  var gameWon = document.getElementById('game-won');
 	
 	  if (this.whiteBloodCells.length === 0) {
-	    box.className="";
-	    canvas.className="opaque-on";
+	    gameOver.className="opaque-off";
+	    canvas.className="opaque-on-half";
+	  }
+	
+	  if (this.allObjects().length === 1 && this.allObjects()[0].type === "WhiteBloodCell") {
+	    gameWon.className="opaque-off";
+	    canvas.className="opaque-on-half";
 	  }
 	
 	}
@@ -545,9 +557,11 @@
 	
 	GameView.prototype.reset = function (game, ctx) {
 	  var canvas = document.getElementById("game-canvas");
-	  var box = document.getElementById('box');
+	  var gameOver = document.getElementById('game-over');
+	  var gameWon = document.getElementById('game-won');
 	
-	  box.className="hidden";
+	  gameOver.className="opaque-on-full";
+	  gameWon.className="opaque-on-full";
 	  canvas.className="opaque-off";
 	  this.ctx = ctx;
 	  this.game = game;

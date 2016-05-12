@@ -41,7 +41,7 @@ Game.prototype.addEliteIntruders = function() {
 
 Game.prototype.addWhiteBloodCell = function() {
   var ship = new WhiteBloodCell({
-    pos: this.randomPosition(),
+    pos: [Game.DIM_X/2, Game.DIM_Y/2],
     game: this,
     color: "orange"
   });
@@ -118,11 +118,17 @@ Game.prototype.checkCollosions = function () {
 
 Game.prototype.checkGameState = function () {
   var canvas = document.getElementById("game-canvas");
-  var box = document.getElementById('box');
+  var gameOver = document.getElementById('game-over');
+  var gameWon = document.getElementById('game-won');
 
   if (this.whiteBloodCells.length === 0) {
-    box.className="";
-    canvas.className="opaque-on";
+    gameOver.className="opaque-off";
+    canvas.className="opaque-on-half";
+  }
+
+  if (this.allObjects().length === 1 && this.allObjects()[0].type === "WhiteBloodCell") {
+    gameWon.className="opaque-off";
+    canvas.className="opaque-on-half";
   }
 
 }

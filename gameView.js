@@ -50,9 +50,11 @@ GameView.prototype.bindKeyHandlers = function () {
 
 GameView.prototype.reset = function (game, ctx) {
   var canvas = document.getElementById("game-canvas");
-  var box = document.getElementById('box');
+  var gameOver = document.getElementById('game-over');
+  var gameWon = document.getElementById('game-won');
 
-  box.className="hidden";
+  gameOver.className="opaque-on-full";
+  gameWon.className="opaque-on-full";
   canvas.className="opaque-off";
   this.ctx = ctx;
   this.game = game;
