@@ -37,9 +37,7 @@ MovingObject.prototype.collideWith = function (otherObject) {
       this.game.remove(this);
     }
     otherObject.radius += this.radius/otherObject.radius;
-    // this.radius -= 0.5;
     this.radius*=0.90;
-    // this.radius -= this.radius/otherObject.radius;
   }
 };
 
